@@ -4,23 +4,27 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Serenidad — Tu espacio interior</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=Outfit:wght@100;200;300;400&family=DM+Sans:wght@200;300;400&display=swap" rel="stylesheet">
 <style>
   :root {
-    --sage: #8a9e7f;
-    --moss: #5c7355;
-    --cream: #f5f0e8;
-    --warm: #e8dfd0;
-    --clay: #c4a882;
-    --deep: #2a3528;
-    --mist: #d4ddd2;
-    --gold: #c9a96e;
+    --sage: #5a9e8f;        /* verde agua */
+    --moss: #3d7a6e;        /* verde profundo */
+    --cream: #1a2e3a;       /* texto principal oscuro */
+    --warm: #e8f0f5;        /* superficie suave */
+    --clay: #4a8fa3;        /* azul medio */
+    --deep: #f0f6f9;        /* fondo principal blanco nórdico */
+    --mist: #cde4ed;        /* azul hielo */
+    --gold: #3a8fa0;        /* acento azul-verde */
+    --surface: #ffffff;     /* tarjetas blancas */
+    --border: rgba(90,158,143,0.2);
+    --text-muted: rgba(26,46,58,0.45);
+    --text-soft: rgba(26,46,58,0.65);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    font-family: 'Jost', sans-serif;
+    font-family: 'DM Sans', sans-serif;
     background: var(--deep);
     color: var(--cream);
     min-height: 100vh;
@@ -31,18 +35,18 @@
   /* Custom cursor */
   .cursor {
     width: 8px; height: 8px;
-    background: var(--gold);
+    background: var(--sage);
     border-radius: 50%;
     position: fixed;
     pointer-events: none;
     z-index: 9999;
     transform: translate(-50%, -50%);
     transition: transform 0.1s ease;
-    mix-blend-mode: screen;
+    mix-blend-mode: multiply;
   }
   .cursor-ring {
     width: 36px; height: 36px;
-    border: 1px solid rgba(201,169,110,0.4);
+    border: 1px solid rgba(90,158,143,0.5);
     border-radius: 50%;
     position: fixed;
     pointer-events: none;
@@ -65,9 +69,9 @@
     opacity: 0.18;
     animation: drift 20s ease-in-out infinite;
   }
-  .orb-1 { width: 600px; height: 600px; background: var(--sage); top: -200px; left: -100px; animation-delay: 0s; }
-  .orb-2 { width: 400px; height: 400px; background: var(--clay); bottom: -100px; right: -100px; animation-delay: -7s; }
-  .orb-3 { width: 300px; height: 300px; background: var(--moss); top: 50%; left: 60%; animation-delay: -14s; }
+  .orb-1 { width: 600px; height: 600px; background: #a8d5e2; top: -200px; left: -100px; animation-delay: 0s; }
+  .orb-2 { width: 400px; height: 400px; background: #8ecfc4; bottom: -100px; right: -100px; animation-delay: -7s; }
+  .orb-3 { width: 300px; height: 300px; background: #b8dfe8; top: 50%; left: 60%; animation-delay: -14s; }
 
   @keyframes drift {
     0%, 100% { transform: translate(0, 0) scale(1); }
@@ -88,16 +92,16 @@
     justify-content: space-between;
     align-items: center;
     padding: 28px 48px;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(90,158,143,0.15);
   }
   .logo {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Playfair Display', serif;
     font-size: 1.5rem;
     font-weight: 300;
     letter-spacing: 0.25em;
     color: var(--cream);
   }
-  .logo span { color: var(--gold); font-style: italic; }
+  .logo span { color: var(--sage); font-style: italic; }
   .nav {
     display: flex;
     gap: 36px;
@@ -107,7 +111,7 @@
     font-size: 0.7rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: rgba(245,240,232,0.5);
+    color: var(--text-muted);
     text-decoration: none;
     transition: color 0.3s;
     cursor: none;
@@ -127,7 +131,7 @@
     min-height: calc(100vh - 85px);
   }
   .hero-text h1 {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Playfair Display', serif;
     font-size: clamp(3rem, 5vw, 5rem);
     font-weight: 300;
     line-height: 1.1;
@@ -135,14 +139,14 @@
   }
   .hero-text h1 em {
     font-style: italic;
-    color: var(--gold);
+    color: var(--sage);
     display: block;
   }
   .hero-text p {
-    font-weight: 200;
+    font-weight: 300;
     font-size: 1rem;
     line-height: 1.8;
-    color: rgba(245,240,232,0.65);
+    color: var(--text-soft);
     max-width: 420px;
     margin-bottom: 40px;
   }
@@ -153,30 +157,32 @@
     gap: 14px;
   }
   .mood-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 16px;
     padding: 28px 24px;
     cursor: none;
     transition: all 0.4s ease;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 2px 16px rgba(90,158,143,0.06);
   }
   .mood-card::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+    background: linear-gradient(135deg, rgba(90,158,143,0.03) 0%, transparent 100%);
     border-radius: 16px;
   }
   .mood-card:hover {
-    background: rgba(255,255,255,0.08);
-    border-color: rgba(201,169,110,0.3);
+    background: #f7fbfc;
+    border-color: rgba(90,158,143,0.4);
     transform: translateY(-3px);
+    box-shadow: 0 8px 32px rgba(90,158,143,0.12);
   }
   .mood-card.selected {
-    background: rgba(201,169,110,0.12);
-    border-color: rgba(201,169,110,0.5);
+    background: rgba(90,158,143,0.08);
+    border-color: rgba(90,158,143,0.5);
   }
   .mood-icon { font-size: 2rem; margin-bottom: 10px; display: block; }
   .mood-name {
@@ -189,7 +195,7 @@
   }
   .mood-desc {
     font-size: 0.7rem;
-    color: rgba(245,240,232,0.4);
+    color: var(--text-muted);
     line-height: 1.5;
   }
 
@@ -200,9 +206,9 @@
     gap: 10px;
     padding: 14px 32px;
     background: transparent;
-    border: 1px solid rgba(201,169,110,0.5);
-    color: var(--gold);
-    font-family: 'Jost', sans-serif;
+    border: 1px solid rgba(90,158,143,0.5);
+    color: var(--sage);
+    font-family: 'DM Sans', sans-serif;
     font-size: 0.7rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
@@ -211,15 +217,15 @@
     transition: all 0.3s;
   }
   .btn:hover {
-    background: rgba(201,169,110,0.1);
-    border-color: var(--gold);
+    background: rgba(90,158,143,0.08);
+    border-color: var(--sage);
   }
   .btn-solid {
-    background: var(--gold);
-    color: var(--deep);
-    border-color: var(--gold);
+    background: var(--sage);
+    color: white;
+    border-color: var(--sage);
   }
-  .btn-solid:hover { background: #d4b578; }
+  .btn-solid:hover { background: var(--moss); border-color: var(--moss); }
 
   /* ── RESPIRAR ── */
   .breathe-center {
@@ -231,7 +237,7 @@
     text-align: center;
   }
   .breathe-title {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Playfair Display', serif;
     font-size: 2.5rem;
     font-weight: 300;
     margin-bottom: 8px;
@@ -240,7 +246,7 @@
     font-size: 0.75rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: rgba(245,240,232,0.4);
+    color: var(--text-muted);
     margin-bottom: 70px;
   }
 
@@ -254,26 +260,26 @@
     width: 260px;
     height: 260px;
     border-radius: 50%;
-    border: 1px solid rgba(138,158,127,0.3);
+    border: 1px solid rgba(90,158,143,0.3);
     position: absolute;
     top: 0; left: 0;
   }
   .breath-core {
     width: 120px;
     height: 120px;
-    background: radial-gradient(circle, rgba(138,158,127,0.4) 0%, rgba(92,115,85,0.2) 60%, transparent 100%);
+    background: radial-gradient(circle, rgba(90,158,143,0.25) 0%, rgba(74,143,163,0.1) 60%, transparent 100%);
     border-radius: 50%;
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    border: 1px solid rgba(138,158,127,0.5);
+    border: 1px solid rgba(90,158,143,0.4);
     transition: all 0.1s linear;
   }
   .breath-label {
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Playfair Display', serif;
     font-size: 1.1rem;
     font-weight: 300;
     color: var(--cream);
@@ -282,9 +288,9 @@
     white-space: nowrap;
   }
   .breath-count {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Outfit', sans-serif;
     font-size: 4rem;
-    font-weight: 300;
+    font-weight: 100;
     color: var(--sage);
     margin-bottom: 12px;
     min-width: 60px;
@@ -308,19 +314,20 @@
   }
   .breath-opt {
     padding: 8px 20px;
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid var(--border);
     border-radius: 100px;
     font-size: 0.65rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: rgba(245,240,232,0.5);
+    color: var(--text-muted);
     cursor: none;
     transition: all 0.3s;
+    background: var(--surface);
   }
   .breath-opt:hover, .breath-opt.active {
     border-color: var(--sage);
     color: var(--sage);
-    background: rgba(138,158,127,0.08);
+    background: rgba(90,158,143,0.06);
   }
 
   /* ── PENSAMIENTOS ── */
@@ -331,18 +338,18 @@
     align-items: start;
   }
   .thought-header {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Playfair Display', serif;
     font-size: 2.2rem;
     font-weight: 300;
     margin-bottom: 8px;
   }
-  .thought-header span { color: var(--gold); font-style: italic; }
+  .thought-header span { color: var(--sage); font-style: italic; }
   .thought-intro {
     font-size: 0.85rem;
-    color: rgba(245,240,232,0.5);
+    color: var(--text-soft);
     line-height: 1.8;
     margin-bottom: 36px;
-    font-weight: 200;
+    font-weight: 300;
   }
 
   .textarea-wrap {
@@ -351,12 +358,12 @@
   }
   .thought-input {
     width: 100%;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 16px;
     padding: 24px;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
     font-weight: 300;
     color: var(--cream);
     resize: none;
@@ -364,11 +371,13 @@
     line-height: 1.7;
     transition: border-color 0.3s;
     cursor: text;
+    box-shadow: 0 2px 12px rgba(90,158,143,0.05);
   }
-  .thought-input::placeholder { color: rgba(245,240,232,0.2); font-style: italic; }
+  .thought-input::placeholder { color: var(--text-muted); font-style: italic; }
   .thought-input:focus {
     outline: none;
-    border-color: rgba(201,169,110,0.3);
+    border-color: rgba(90,158,143,0.5);
+    box-shadow: 0 4px 20px rgba(90,158,143,0.1);
   }
 
   .reframe-btn {
@@ -376,10 +385,10 @@
     align-items: center;
     gap: 12px;
     padding: 16px 28px;
-    background: rgba(138,158,127,0.12);
-    border: 1px solid rgba(138,158,127,0.3);
+    background: rgba(90,158,143,0.08);
+    border: 1px solid rgba(90,158,143,0.3);
     color: var(--sage);
-    font-family: 'Jost', sans-serif;
+    font-family: 'DM Sans', sans-serif;
     font-size: 0.7rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
@@ -391,7 +400,7 @@
     margin-bottom: 36px;
   }
   .reframe-btn:hover {
-    background: rgba(138,158,127,0.2);
+    background: rgba(90,158,143,0.15);
     border-color: var(--sage);
   }
   .reframe-btn:disabled {
@@ -405,12 +414,13 @@
     gap: 14px;
   }
   .thought-card {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.07);
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 14px;
     padding: 22px;
     animation: fadeUp 0.5s ease forwards;
     opacity: 0;
+    box-shadow: 0 2px 12px rgba(90,158,143,0.06);
   }
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(12px); }
@@ -425,18 +435,18 @@
     align-items: center;
     gap: 6px;
   }
-  .card-original .card-label { color: rgba(245,240,232,0.3); }
-  .card-reframe .card-label { color: var(--gold); }
+  .card-original .card-label { color: var(--text-muted); }
+  .card-reframe .card-label { color: var(--sage); }
   .card-original .card-label::before { content: '↓'; }
   .card-reframe .card-label::before { content: '✦'; }
   .card-text {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Playfair Display', serif;
     font-size: 1rem;
     font-weight: 300;
     line-height: 1.7;
     color: var(--cream);
   }
-  .card-original .card-text { color: rgba(245,240,232,0.6); font-style: italic; }
+  .card-original .card-text { color: var(--text-soft); font-style: italic; }
 
   /* Sidebar afirmaciones */
   .affirmations-sidebar {
@@ -447,12 +457,12 @@
     font-size: 0.65rem;
     letter-spacing: 0.25em;
     text-transform: uppercase;
-    color: rgba(245,240,232,0.35);
+    color: var(--text-muted);
     margin-bottom: 20px;
   }
   .affirmation-card {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.07);
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 14px;
     padding: 24px;
     margin-bottom: 14px;
@@ -460,23 +470,25 @@
     overflow: hidden;
     cursor: none;
     transition: all 0.3s;
+    box-shadow: 0 2px 10px rgba(90,158,143,0.05);
   }
   .affirmation-card:hover {
-    border-color: rgba(201,169,110,0.25);
-    background: rgba(255,255,255,0.05);
+    border-color: rgba(90,158,143,0.4);
+    box-shadow: 0 6px 24px rgba(90,158,143,0.1);
+    transform: translateY(-2px);
   }
   .affirmation-card::after {
     content: '"';
     position: absolute;
     top: 10px;
     right: 16px;
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Playfair Display', serif;
     font-size: 4rem;
-    color: rgba(201,169,110,0.1);
+    color: rgba(90,158,143,0.1);
     line-height: 1;
   }
   .affirmation-text {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Playfair Display', serif;
     font-size: 0.95rem;
     font-weight: 300;
     font-style: italic;
@@ -485,7 +497,7 @@
   }
   .affirmation-author {
     font-size: 0.65rem;
-    color: var(--clay);
+    color: var(--sage);
     letter-spacing: 0.1em;
     margin-top: 10px;
   }
@@ -498,28 +510,30 @@
     margin-bottom: 50px;
   }
   .meditate-card {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.07);
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 20px;
     padding: 32px 28px;
     cursor: none;
     transition: all 0.4s;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 2px 16px rgba(90,158,143,0.07);
   }
   .meditate-card:hover {
-    background: rgba(255,255,255,0.06);
-    border-color: rgba(138,158,127,0.3);
+    background: #f7fbfc;
+    border-color: rgba(90,158,143,0.4);
     transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(90,158,143,0.13);
   }
   .meditate-card.active-session {
     border-color: var(--sage);
-    background: rgba(138,158,127,0.08);
+    background: rgba(90,158,143,0.06);
   }
   .meditate-duration {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2.8rem;
-    font-weight: 300;
+    font-family: 'Outfit', sans-serif;
+    font-size: 3rem;
+    font-weight: 100;
     color: var(--sage);
     line-height: 1;
     margin-bottom: 4px;
@@ -528,18 +542,18 @@
     font-size: 0.65rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: rgba(245,240,232,0.35);
+    color: var(--text-muted);
     margin-bottom: 16px;
   }
   .meditate-name {
     font-size: 0.9rem;
-    font-weight: 300;
+    font-weight: 400;
     color: var(--cream);
     margin-bottom: 8px;
   }
   .meditate-desc {
     font-size: 0.75rem;
-    color: rgba(245,240,232,0.4);
+    color: var(--text-soft);
     line-height: 1.6;
   }
 
@@ -547,7 +561,7 @@
   .session-overlay {
     position: fixed;
     inset: 0;
-    background: var(--deep);
+    background: #0d2030;
     z-index: 100;
     display: flex;
     flex-direction: column;
@@ -556,6 +570,82 @@
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.8s ease;
+  }
+
+  .session-time {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(3.5rem, 9vw, 6.5rem);
+    font-weight: 100;
+    color: #e8f4f8;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    margin-bottom: 8px;
+    transition: color 0.5s;
+  }
+  .session-time.finishing { color: #7ecfc4; }
+
+  .session-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: rgba(168,213,226,0.7);
+    margin-bottom: 48px;
+  }
+
+  .session-affirmation {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(232,244,248,0.5);
+    max-width: 500px;
+    line-height: 1.7;
+    margin-bottom: 28px;
+    min-height: 48px;
+    transition: opacity 0.8s ease;
+  }
+
+  .session-guide {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #7ecfc4;
+    margin-bottom: 36px;
+    min-height: 18px;
+    transition: opacity 0.5s;
+  }
+
+  .session-badge {
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(232,244,248,0.3);
+    margin-bottom: 32px;
+  }
+
+  .session-close {
+    position: fixed;
+    top: 28px; right: 36px;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(232,244,248,0.3);
+    cursor: none;
+    z-index: 10;
+    transition: color 0.3s;
+  }
+  .session-close:hover { color: #e8f4f8; }
+
+  .arc-track { fill: none; stroke: rgba(255,255,255,0.05); }
+  .arc-fill { fill: none; stroke: rgba(126,207,196,0.45); stroke-linecap: round; transition: stroke-dashoffset 1s linear; }
+
+  .session-progress-bar {
+    position: fixed;
+    bottom: 0; left: 0;
+    height: 2px;
+    background: rgba(126,207,196,0.5);
+    transition: width 1s linear;
+    z-index: 10;
   }
   .session-overlay.visible {
     opacity: 1;
@@ -579,130 +669,23 @@
     align-items: center;
     text-align: center;
     gap: 0;
+    max-height: 100vh;
+    overflow: visible;
+    padding: 60px 24px 40px;
   }
 
-  .session-close {
-    position: fixed;
-    top: 28px; right: 36px;
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(245,240,232,0.3);
-    cursor: none;
-    z-index: 10;
-    transition: color 0.3s;
-  }
-  .session-close:hover { color: var(--cream); }
+  .session-controls { display: flex; gap: 14px; }
 
-  .session-badge {
-    font-size: 0.6rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: rgba(245,240,232,0.3);
-    margin-bottom: 32px;
-  }
-
-  .session-time {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(5rem, 12vw, 9rem);
-    font-weight: 300;
-    color: var(--cream);
-    letter-spacing: 0.02em;
-    line-height: 1;
-    margin-bottom: 8px;
-    transition: color 0.5s;
-  }
-  .session-time.finishing { color: var(--gold); }
-
-  .session-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.2rem;
-    font-style: italic;
-    color: var(--clay);
-    margin-bottom: 48px;
-  }
-
-  /* Arc progress */
+  /* Arc position */
   .session-arc {
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
     pointer-events: none;
   }
-  .arc-track { fill: none; stroke: rgba(255,255,255,0.04); }
-  .arc-fill { fill: none; stroke: rgba(138,158,127,0.4); stroke-linecap: round; transition: stroke-dashoffset 1s linear; }
 
-  /* Affirmation */
-  .session-affirmation {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1rem, 2.5vw, 1.4rem);
-    font-weight: 300;
-    font-style: italic;
-    color: rgba(245,240,232,0.55);
-    max-width: 540px;
-    line-height: 1.7;
-    margin-bottom: 50px;
-    min-height: 60px;
-    transition: opacity 0.8s ease;
-  }
-
-  /* Guide message */
-  .session-guide {
-    font-size: 0.7rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--sage);
-    margin-bottom: 36px;
-    min-height: 18px;
-    transition: opacity 0.5s;
-  }
-
-  .session-controls { display: flex; gap: 14px; }
-
-  /* Progress bar bottom */
-  .session-progress-bar {
-    position: fixed;
-    bottom: 0; left: 0;
-    height: 2px;
-    background: rgba(138,158,127,0.5);
-    transition: width 1s linear;
-    z-index: 10;
-  }
-
-  /* Timer display (card view) */
-  .timer-display {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 50px;
-    background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 24px;
-  }
-  .timer-label {
-    font-size: 0.65rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: rgba(245,240,232,0.3);
-    margin-bottom: 20px;
-  }
-  .timer-time {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 5rem;
-    font-weight: 300;
-    color: var(--cream);
-    letter-spacing: 0.05em;
-    line-height: 1;
-    margin-bottom: 12px;
-  }
-  .timer-session-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem;
-    font-style: italic;
-    color: var(--clay);
-    margin-bottom: 36px;
-  }
-  .timer-controls { display: flex; gap: 14px; }
+  /* Timer display (legacy, unused) */
+  .timer-display { display: none; }
 
   /* Progress arc (legacy) */
   .progress-ring { margin-bottom: 20px; }
@@ -899,8 +882,8 @@
         <div class="meditate-name">Pausa rápida</div>
         <div class="meditate-desc">Respiración consciente y silencio activo. Para cuando el día aprieta.</div>
         <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
-          <span style="font-size:0.6rem;letter-spacing:0.12em;color:rgba(245,240,232,0.3);border:1px solid rgba(255,255,255,0.08);padding:4px 10px;border-radius:100px;">Ondas suaves</span>
-          <span style="font-size:0.6rem;letter-spacing:0.12em;color:rgba(245,240,232,0.3);border:1px solid rgba(255,255,255,0.08);padding:4px 10px;border-radius:100px;">Voz guía</span>
+          <span style="font-size:0.6rem;letter-spacing:0.12em;color:rgba(26,46,58,0.4);border:1px solid rgba(90,158,143,0.2);padding:4px 10px;border-radius:100px;">Ondas suaves</span>
+          <span style="font-size:0.6rem;letter-spacing:0.12em;color:rgba(26,46,58,0.4);border:1px solid rgba(90,158,143,0.2);padding:4px 10px;border-radius:100px;">Voz guía</span>
         </div>
       </div>
       <div class="meditate-card" onclick="startMeditation(this, 5, 'centrado')">
@@ -909,8 +892,8 @@
         <div class="meditate-name">Centrado</div>
         <div class="meditate-desc">Visualización de luz y afirmaciones de presencia. Vuelve a ti.</div>
         <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
-          <span style="font-size:0.6rem;letter-spacing:0.12em;color:rgba(245,240,232,0.3);border:1px solid rgba(255,255,255,0.08);padding:4px 10px;border-radius:100px;">Pulso solar</span>
-          <span style="font-size:0.6rem;letter-spacing:0.12em;color:rgba(245,240,232,0.3);border:1px solid rgba(255,255,255,0.08);padding:4px 10px;border-radius:100px;">Afirmaciones</span>
+          <span style="font-size:0.6rem;letter-spacing:0.12em;color:rgba(26,46,58,0.4);border:1px solid rgba(90,158,143,0.2);padding:4px 10px;border-radius:100px;">Pulso solar</span>
+          <span style="font-size:0.6rem;letter-spacing:0.12em;color:rgba(26,46,58,0.4);border:1px solid rgba(90,158,143,0.2);padding:4px 10px;border-radius:100px;">Afirmaciones</span>
         </div>
       </div>
       <div class="meditate-card" onclick="startMeditation(this, 10, 'profunda')">
@@ -919,8 +902,8 @@
         <div class="meditate-name">Inmersión profunda</div>
         <div class="meditate-desc">Paisaje sonoro envolvente y guía contemplativa. Suéltalo todo.</div>
         <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
-          <span style="font-size:0.6rem;letter-spacing:0.12em;color:rgba(245,240,232,0.3);border:1px solid rgba(255,255,255,0.08);padding:4px 10px;border-radius:100px;">Bosque profundo</span>
-          <span style="font-size:0.6rem;letter-spacing:0.12em;color:rgba(245,240,232,0.3);border:1px solid rgba(255,255,255,0.08);padding:4px 10px;border-radius:100px;">Voz + afirmaciones</span>
+          <span style="font-size:0.6rem;letter-spacing:0.12em;color:rgba(26,46,58,0.4);border:1px solid rgba(90,158,143,0.2);padding:4px 10px;border-radius:100px;">Bosque profundo</span>
+          <span style="font-size:0.6rem;letter-spacing:0.12em;color:rgba(26,46,58,0.4);border:1px solid rgba(90,158,143,0.2);padding:4px 10px;border-radius:100px;">Voz + afirmaciones</span>
         </div>
       </div>
     </div>
@@ -934,11 +917,11 @@
 
     <div class="session-content">
       <p class="session-badge" id="sessionBadge">Sesión · 3 min</p>
-      <div style="position:relative;display:flex;align-items:center;justify-content:center;width:340px;height:340px;margin-bottom:16px;">
-        <svg class="session-arc" width="340" height="340" viewBox="0 0 340 340" style="transform:rotate(-90deg)">
-          <circle class="arc-track" cx="170" cy="170" r="155" stroke-width="1"/>
-          <circle class="arc-fill" id="sessionArc" cx="170" cy="170" r="155" stroke-width="1"
-            stroke-dasharray="974" stroke-dashoffset="0"/>
+      <div style="position:relative;display:flex;align-items:center;justify-content:center;width:260px;height:260px;margin-bottom:12px;">
+        <svg class="session-arc" width="260" height="260" viewBox="0 0 260 260" style="transform:rotate(-90deg)">
+          <circle class="arc-track" cx="130" cy="130" r="118" stroke-width="1"/>
+          <circle class="arc-fill" id="sessionArc" cx="130" cy="130" r="118" stroke-width="1"
+            stroke-dasharray="741" stroke-dashoffset="0"/>
         </svg>
         <div style="text-align:center;">
           <div class="session-time" id="sessionTime">03:00</div>
@@ -1116,7 +1099,7 @@ const SESSION_DATA = {
     name: 'Pausa rápida',
     minutes: 3,
     visualStyle: 'waves',
-    baseColor: [138, 158, 127],
+    baseColor: [74, 160, 180],
     affirmations: [
       'Este momento es suficiente.',
       'Permito que mi mente descanse.',
@@ -1138,7 +1121,7 @@ const SESSION_DATA = {
     name: 'Centrado',
     minutes: 5,
     visualStyle: 'pulse',
-    baseColor: [201, 169, 110],
+    baseColor: [90, 175, 155],
     affirmations: [
       'Soy el centro inmóvil de mi vida.',
       'Confío en el ritmo natural de las cosas.',
@@ -1161,7 +1144,7 @@ const SESSION_DATA = {
     name: 'Inmersión profunda',
     minutes: 10,
     visualStyle: 'forest',
-    baseColor: [92, 115, 85],
+    baseColor: [50, 130, 160],
     affirmations: [
       'Me permito soltar todo lo que cargo.',
       'El silencio me sana.',
@@ -1284,7 +1267,7 @@ function updateSessionDisplay() {
   const m = Math.floor(sessionRemaining / 60);
   const s = sessionRemaining % 60;
   document.getElementById('sessionTime').textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-  const circ = 974;
+  const circ = 741;
   const progress = sessionRemaining / sessionTotal;
   document.getElementById('sessionArc').style.strokeDashoffset = circ * (1 - progress);
   document.getElementById('sessionProgressBar').style.width = (progress * 100) + '%';
@@ -1456,7 +1439,7 @@ function animateWaves(ctx, canvas, color) {
   let t = 0;
   function draw() {
     canvasAnim = requestAnimationFrame(draw);
-    ctx.fillStyle = 'rgba(42,53,40,0.15)';
+    ctx.fillStyle = 'rgba(13,32,48,0.15)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     const [r,g,b] = color;
     for (let w = 0; w < 5; w++) {
@@ -1515,7 +1498,7 @@ function animateForest(ctx, canvas, color) {
   const [r,g,b] = color;
   function draw() {
     canvasAnim = requestAnimationFrame(draw);
-    ctx.fillStyle = 'rgba(42,53,40,0.12)';
+    ctx.fillStyle = 'rgba(13,32,48,0.12)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // gradient fog layers
