@@ -543,6 +543,133 @@
     line-height: 1.6;
   }
 
+  /* ── MEDITATION SESSION ── */
+  .session-overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--deep);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease;
+  }
+  .session-overlay.visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  /* Canvas visualizer */
+  #meditationCanvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .session-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0;
+  }
+
+  .session-close {
+    position: fixed;
+    top: 28px; right: 36px;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.3);
+    cursor: none;
+    z-index: 10;
+    transition: color 0.3s;
+  }
+  .session-close:hover { color: var(--cream); }
+
+  .session-badge {
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.3);
+    margin-bottom: 32px;
+  }
+
+  .session-time {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(5rem, 12vw, 9rem);
+    font-weight: 300;
+    color: var(--cream);
+    letter-spacing: 0.02em;
+    line-height: 1;
+    margin-bottom: 8px;
+    transition: color 0.5s;
+  }
+  .session-time.finishing { color: var(--gold); }
+
+  .session-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--clay);
+    margin-bottom: 48px;
+  }
+
+  /* Arc progress */
+  .session-arc {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .arc-track { fill: none; stroke: rgba(255,255,255,0.04); }
+  .arc-fill { fill: none; stroke: rgba(138,158,127,0.4); stroke-linecap: round; transition: stroke-dashoffset 1s linear; }
+
+  /* Affirmation */
+  .session-affirmation {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(245,240,232,0.55);
+    max-width: 540px;
+    line-height: 1.7;
+    margin-bottom: 50px;
+    min-height: 60px;
+    transition: opacity 0.8s ease;
+  }
+
+  /* Guide message */
+  .session-guide {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 36px;
+    min-height: 18px;
+    transition: opacity 0.5s;
+  }
+
+  .session-controls { display: flex; gap: 14px; }
+
+  /* Progress bar bottom */
+  .session-progress-bar {
+    position: fixed;
+    bottom: 0; left: 0;
+    height: 2px;
+    background: rgba(138,158,127,0.5);
+    transition: width 1s linear;
+    z-index: 10;
+  }
+
+  /* Timer display (card view) */
   .timer-display {
     display: flex;
     flex-direction: column;
@@ -577,7 +704,7 @@
   }
   .timer-controls { display: flex; gap: 14px; }
 
-  /* Progress arc */
+  /* Progress arc (legacy) */
   .progress-ring { margin-bottom: 20px; }
   .progress-ring svg { transform: rotate(-90deg); }
   .progress-track { fill: none; stroke: rgba(255,255,255,0.05); }
@@ -763,49 +890,69 @@
   <!-- MEDITAR -->
   <section class="section" id="meditar">
     <h2 class="thought-header" style="margin-bottom:8px;">Sesiones de <span style="color:var(--gold);font-style:italic;">meditación</span></h2>
-    <p class="thought-intro">Elige la duración que necesitas. Cada segundo de quietud es valioso.</p>
+    <p class="thought-intro">Cada sesión tiene su propio mundo. Elige lo que necesitas ahora.</p>
 
     <div class="meditate-grid" id="meditateGrid">
-      <div class="meditate-card" onclick="startMeditation(this, 3, 'Pausa rápida')">
+      <div class="meditate-card" onclick="startMeditation(this, 3, 'pausa')">
         <div class="meditate-duration">3</div>
         <div class="meditate-unit">minutos</div>
         <div class="meditate-name">Pausa rápida</div>
-        <div class="meditate-desc">Para cuando el día es intenso y necesitas un respiro breve.</div>
+        <div class="meditate-desc">Respiración consciente y silencio activo. Para cuando el día aprieta.</div>
+        <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
+          <span style="font-size:0.6rem;letter-spacing:0.12em;color:rgba(245,240,232,0.3);border:1px solid rgba(255,255,255,0.08);padding:4px 10px;border-radius:100px;">Ondas suaves</span>
+          <span style="font-size:0.6rem;letter-spacing:0.12em;color:rgba(245,240,232,0.3);border:1px solid rgba(255,255,255,0.08);padding:4px 10px;border-radius:100px;">Voz guía</span>
+        </div>
       </div>
-      <div class="meditate-card" onclick="startMeditation(this, 5, 'Centrado')">
+      <div class="meditate-card" onclick="startMeditation(this, 5, 'centrado')">
         <div class="meditate-duration">5</div>
         <div class="meditate-unit">minutos</div>
         <div class="meditate-name">Centrado</div>
-        <div class="meditate-desc">Reconecta con tu centro y reduce el ruido mental.</div>
+        <div class="meditate-desc">Visualización de luz y afirmaciones de presencia. Vuelve a ti.</div>
+        <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
+          <span style="font-size:0.6rem;letter-spacing:0.12em;color:rgba(245,240,232,0.3);border:1px solid rgba(255,255,255,0.08);padding:4px 10px;border-radius:100px;">Pulso solar</span>
+          <span style="font-size:0.6rem;letter-spacing:0.12em;color:rgba(245,240,232,0.3);border:1px solid rgba(255,255,255,0.08);padding:4px 10px;border-radius:100px;">Afirmaciones</span>
+        </div>
       </div>
-      <div class="meditate-card" onclick="startMeditation(this, 10, 'Inmersión profunda')">
+      <div class="meditate-card" onclick="startMeditation(this, 10, 'profunda')">
         <div class="meditate-duration">10</div>
         <div class="meditate-unit">minutos</div>
         <div class="meditate-name">Inmersión profunda</div>
-        <div class="meditate-desc">Sumérgete en la quietud y transforma tu estado interior.</div>
-      </div>
-    </div>
-
-    <div class="timer-display hidden" id="timerDisplay">
-      <p class="timer-label">Sesión en curso</p>
-
-      <div class="progress-ring">
-        <svg width="140" height="140" viewBox="0 0 140 140">
-          <circle class="progress-track" cx="70" cy="70" r="60" stroke-width="2"/>
-          <circle class="progress-fill" id="progressArc" cx="70" cy="70" r="60" stroke-width="2"
-            stroke-dasharray="377" stroke-dashoffset="0"/>
-        </svg>
-      </div>
-
-      <div class="timer-time" id="timerTime">00:00</div>
-      <div class="timer-session-name" id="timerSessionName"></div>
-      <div class="timer-controls">
-        <button class="btn btn-solid" id="timerPauseBtn" onclick="toggleTimer()">Pausar</button>
-        <button class="btn" onclick="stopTimer()">Terminar</button>
+        <div class="meditate-desc">Paisaje sonoro envolvente y guía contemplativa. Suéltalo todo.</div>
+        <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
+          <span style="font-size:0.6rem;letter-spacing:0.12em;color:rgba(245,240,232,0.3);border:1px solid rgba(255,255,255,0.08);padding:4px 10px;border-radius:100px;">Bosque profundo</span>
+          <span style="font-size:0.6rem;letter-spacing:0.12em;color:rgba(245,240,232,0.3);border:1px solid rgba(255,255,255,0.08);padding:4px 10px;border-radius:100px;">Voz + afirmaciones</span>
+        </div>
       </div>
     </div>
   </section>
-</div>
+
+  <!-- SESSION OVERLAY -->
+  <div class="session-overlay" id="sessionOverlay">
+    <canvas id="meditationCanvas"></canvas>
+    <button class="session-close" onclick="stopSession()">✕ Terminar</button>
+    <div class="session-progress-bar" id="sessionProgressBar" style="width:100%"></div>
+
+    <div class="session-content">
+      <p class="session-badge" id="sessionBadge">Sesión · 3 min</p>
+      <div style="position:relative;display:flex;align-items:center;justify-content:center;width:340px;height:340px;margin-bottom:16px;">
+        <svg class="session-arc" width="340" height="340" viewBox="0 0 340 340" style="transform:rotate(-90deg)">
+          <circle class="arc-track" cx="170" cy="170" r="155" stroke-width="1"/>
+          <circle class="arc-fill" id="sessionArc" cx="170" cy="170" r="155" stroke-width="1"
+            stroke-dasharray="974" stroke-dashoffset="0"/>
+        </svg>
+        <div style="text-align:center;">
+          <div class="session-time" id="sessionTime">03:00</div>
+          <div class="session-name" id="sessionName">Pausa rápida</div>
+        </div>
+      </div>
+      <p class="session-guide" id="sessionGuide"></p>
+      <p class="session-affirmation" id="sessionAffirmation"></p>
+      <div class="session-controls">
+        <button class="btn btn-solid" id="sessionPauseBtn" onclick="toggleSession()">Iniciar</button>
+        <button class="btn" onclick="stopSession()">Salir</button>
+      </div>
+    </div>
+  </div>
 
 <script>
 // Cursor
@@ -962,66 +1109,447 @@ async function reframeThought() {
   btnText.textContent = 'Transformar pensamiento';
 }
 
-// ── MEDITATION TIMER ──
-let timerInterval = null;
-let timerRemaining = 0;
-let timerTotal = 0;
-let timerRunning = false;
-let activeCard = null;
+// ── MEDITATION SESSION ENGINE ──
+const SESSION_DATA = {
+  pausa: {
+    label: 'Pausa rápida · 3 min',
+    name: 'Pausa rápida',
+    minutes: 3,
+    visualStyle: 'waves',
+    baseColor: [138, 158, 127],
+    affirmations: [
+      'Este momento es suficiente.',
+      'Permito que mi mente descanse.',
+      'Con cada respiración, me suelto.',
+      'Estoy aquí. Estoy bien.',
+      'La quietud es mi hogar.',
+    ],
+    guide: [
+      { at: 0,   text: 'Cierra los ojos. Siente el peso de tu cuerpo.' },
+      { at: 30,  text: 'Inhala lentamente... exhala sin prisa.' },
+      { at: 60,  text: 'Observa tus pensamientos sin seguirlos.' },
+      { at: 120, text: 'Solo el silencio. Solo tú.' },
+      { at: 160, text: 'Vas a salir renovado. Queda poco.' },
+    ],
+    soundType: 'waves',
+  },
+  centrado: {
+    label: 'Centrado · 5 min',
+    name: 'Centrado',
+    minutes: 5,
+    visualStyle: 'pulse',
+    baseColor: [201, 169, 110],
+    affirmations: [
+      'Soy el centro inmóvil de mi vida.',
+      'Confío en el ritmo natural de las cosas.',
+      'Mi presencia tiene valor. Existo plenamente.',
+      'Dejo ir lo que no puedo controlar.',
+      'La paz ya está dentro de mí.',
+      'Cada instante es un nuevo comienzo.',
+    ],
+    guide: [
+      { at: 0,   text: 'Imagina una luz dorada en tu pecho.' },
+      { at: 45,  text: 'Con cada respiro, esa luz crece.' },
+      { at: 120, text: 'Siente cómo irradia hacia todo tu cuerpo.' },
+      { at: 200, text: 'Eres luz. Eres calma. Eres suficiente.' },
+      { at: 270, text: 'Lleva esta luz contigo al mundo.' },
+    ],
+    soundType: 'tone',
+  },
+  profunda: {
+    label: 'Inmersión profunda · 10 min',
+    name: 'Inmersión profunda',
+    minutes: 10,
+    visualStyle: 'forest',
+    baseColor: [92, 115, 85],
+    affirmations: [
+      'Me permito soltar todo lo que cargo.',
+      'El silencio me sana.',
+      'Soy más grande que mis pensamientos.',
+      'Cada célula de mi cuerpo se relaja.',
+      'Confío en el proceso de mi vida.',
+      'Soy paz. Soy amor. Soy libre.',
+      'Este momento de quietud me transforma.',
+    ],
+    guide: [
+      { at: 0,   text: 'Deja que tu cuerpo se hunda hacia abajo.' },
+      { at: 60,  text: 'Visualiza un bosque tranquilo al amanecer.' },
+      { at: 150, text: 'Escucha el silencio entre los sonidos.' },
+      { at: 270, text: 'Suelta cualquier pensamiento sin juzgarlo.' },
+      { at: 390, text: 'Siente la raíz que te conecta a la tierra.' },
+      { at: 480, text: 'Estás completo. Nada te falta en este instante.' },
+      { at: 560, text: 'Prepárate suavemente para volver.' },
+    ],
+    soundType: 'forest',
+  },
+};
 
-function startMeditation(card, minutes, name) {
-  if (activeCard) activeCard.classList.remove('active-session');
-  activeCard = card;
-  card.classList.add('active-session');
+let sessionData = null;
+let sessionRemaining = 0;
+let sessionTotal = 0;
+let sessionRunning = false;
+let sessionInterval = null;
+let sessionAffirmIdx = 0;
+let sessionAffirmTimer = null;
+let sessionGuideIdx = 0;
+let audioCtx = null;
+let audioNodes = [];
+let canvasAnim = null;
 
-  timerTotal = minutes * 60;
-  timerRemaining = timerTotal;
-  timerRunning = false;
+function startMeditation(card, minutes, type) {
+  sessionData = SESSION_DATA[type];
+  sessionRemaining = sessionData.minutes * 60;
+  sessionTotal = sessionRemaining;
+  sessionRunning = false;
 
-  document.getElementById('timerDisplay').classList.remove('hidden');
-  document.getElementById('timerSessionName').textContent = name;
-  document.getElementById('timerPauseBtn').textContent = 'Iniciar';
-  updateTimerDisplay();
-  timerDisplay.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  document.getElementById('sessionBadge').textContent = sessionData.label;
+  document.getElementById('sessionName').textContent = sessionData.name;
+  document.getElementById('sessionAffirmation').textContent = '';
+  document.getElementById('sessionGuide').textContent = '';
+  document.getElementById('sessionPauseBtn').textContent = 'Iniciar';
+  updateSessionDisplay();
+
+  const overlay = document.getElementById('sessionOverlay');
+  overlay.classList.add('visible');
+  document.body.style.overflow = 'hidden';
+
+  startCanvas(sessionData.visualStyle, sessionData.baseColor);
 }
 
-function toggleTimer() {
-  if (!timerRunning) {
-    timerRunning = true;
-    document.getElementById('timerPauseBtn').textContent = 'Pausar';
-    timerInterval = setInterval(() => {
-      if (timerRemaining <= 0) {
-        clearInterval(timerInterval);
-        timerRunning = false;
-        document.getElementById('timerPauseBtn').textContent = 'Completado ✦';
-        document.getElementById('timerTime').textContent = '✦';
+function toggleSession() {
+  if (!sessionRunning) {
+    sessionRunning = true;
+    document.getElementById('sessionPauseBtn').textContent = 'Pausar';
+    startAudio(sessionData.soundType);
+    startAffirmationCycle();
+    startGuideCycle();
+
+    sessionInterval = setInterval(() => {
+      if (sessionRemaining <= 0) {
+        finishSession();
         return;
       }
-      timerRemaining--;
-      updateTimerDisplay();
+      sessionRemaining--;
+      updateSessionDisplay();
+
+      // guide messages
+      const guide = sessionData.guide;
+      if (sessionGuideIdx < guide.length) {
+        const elapsed = sessionTotal - sessionRemaining;
+        if (elapsed >= guide[sessionGuideIdx].at) {
+          showGuide(guide[sessionGuideIdx].text);
+          sessionGuideIdx++;
+        }
+      }
+
+      // finishing color
+      if (sessionRemaining <= 10) {
+        document.getElementById('sessionTime').classList.add('finishing');
+      }
     }, 1000);
   } else {
-    timerRunning = false;
-    clearInterval(timerInterval);
-    document.getElementById('timerPauseBtn').textContent = 'Continuar';
+    sessionRunning = false;
+    document.getElementById('sessionPauseBtn').textContent = 'Continuar';
+    clearInterval(sessionInterval);
+    pauseAudio();
+    clearTimeout(sessionAffirmTimer);
   }
 }
 
-function updateTimerDisplay() {
-  const m = Math.floor(timerRemaining / 60);
-  const s = timerRemaining % 60;
-  document.getElementById('timerTime').textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-  const circumference = 377;
-  const progress = timerRemaining / timerTotal;
-  document.getElementById('progressArc').style.strokeDashoffset = circumference * (1 - progress);
+function stopSession() {
+  clearInterval(sessionInterval);
+  clearTimeout(sessionAffirmTimer);
+  sessionRunning = false;
+  stopAudio();
+  cancelAnimationFrame(canvasAnim);
+  document.getElementById('sessionOverlay').classList.remove('visible');
+  document.body.style.overflow = '';
+  document.getElementById('sessionTime').classList.remove('finishing');
+  sessionGuideIdx = 0;
 }
 
-function stopTimer() {
-  clearInterval(timerInterval);
-  timerRunning = false;
-  document.getElementById('timerDisplay').classList.add('hidden');
-  if (activeCard) { activeCard.classList.remove('active-session'); activeCard = null; }
+function finishSession() {
+  clearInterval(sessionInterval);
+  sessionRunning = false;
+  stopAudio();
+  document.getElementById('sessionTime').textContent = '✦';
+  document.getElementById('sessionPauseBtn').textContent = 'Completado ✦';
+  document.getElementById('sessionPauseBtn').disabled = true;
+  showGuide('Sesión completada. Vuelve poco a poco.');
+  document.getElementById('sessionAffirmation').textContent = 'Llevas esta calma contigo.';
+  setTimeout(() => { document.getElementById('sessionPauseBtn').disabled = false; }, 2000);
 }
+
+function updateSessionDisplay() {
+  const m = Math.floor(sessionRemaining / 60);
+  const s = sessionRemaining % 60;
+  document.getElementById('sessionTime').textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  const circ = 974;
+  const progress = sessionRemaining / sessionTotal;
+  document.getElementById('sessionArc').style.strokeDashoffset = circ * (1 - progress);
+  document.getElementById('sessionProgressBar').style.width = (progress * 100) + '%';
+}
+
+function showGuide(text) {
+  const el = document.getElementById('sessionGuide');
+  el.style.opacity = '0';
+  setTimeout(() => { el.textContent = text; el.style.opacity = '1'; }, 400);
+  setTimeout(() => { el.style.opacity = '0'; }, 4000);
+}
+
+function startAffirmationCycle() {
+  sessionAffirmIdx = 0;
+  const affirmations = sessionData.affirmations;
+  function show() {
+    if (!sessionRunning) return;
+    const el = document.getElementById('sessionAffirmation');
+    el.style.opacity = '0';
+    setTimeout(() => {
+      el.textContent = affirmations[sessionAffirmIdx % affirmations.length];
+      el.style.opacity = '1';
+      sessionAffirmIdx++;
+    }, 600);
+    sessionAffirmTimer = setTimeout(show, 18000);
+  }
+  setTimeout(show, 3000);
+}
+
+function startGuideCycle() {
+  sessionGuideIdx = 0;
+}
+
+// ── WEB AUDIO ENGINE ──
+function startAudio(type) {
+  try {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    audioNodes = [];
+    if (type === 'waves') createWaveSound();
+    else if (type === 'tone') createToneSound();
+    else if (type === 'forest') createForestSound();
+  } catch(e) { console.warn('Audio not available', e); }
+}
+
+function createWaveSound() {
+  // Pink noise for ocean waves
+  const bufferSize = audioCtx.sampleRate * 4;
+  const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+  const data = buffer.getChannelData(0);
+  let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0;
+  for (let i = 0; i < bufferSize; i++) {
+    const white = Math.random() * 2 - 1;
+    b0 = 0.99886*b0 + white*0.0555179; b1 = 0.99332*b1 + white*0.0750759;
+    b2 = 0.96900*b2 + white*0.1538520; b3 = 0.86650*b3 + white*0.3104856;
+    b4 = 0.55000*b4 + white*0.5329522; b5 = -0.7616*b5 - white*0.0168980;
+    data[i] = (b0+b1+b2+b3+b4+b5+b6+white*0.5362) * 0.11;
+    b6 = white * 0.115926;
+  }
+  const source = audioCtx.createBufferSource();
+  source.buffer = buffer; source.loop = true;
+
+  // LFO for wave rhythm
+  const lfo = audioCtx.createOscillator();
+  const lfoGain = audioCtx.createGain();
+  lfo.frequency.value = 0.08;
+  lfoGain.gain.value = 0.3;
+  lfo.connect(lfoGain);
+
+  const masterGain = audioCtx.createGain();
+  masterGain.gain.value = 0;
+  masterGain.gain.linearRampToValueAtTime(0.4, audioCtx.currentTime + 3);
+
+  const filter = audioCtx.createBiquadFilter();
+  filter.type = 'lowpass'; filter.frequency.value = 800;
+
+  source.connect(filter); filter.connect(masterGain);
+  lfoGain.connect(masterGain.gain);
+  masterGain.connect(audioCtx.destination);
+  source.start();
+  lfo.start();
+  audioNodes = [source, lfo, masterGain];
+}
+
+function createToneSound() {
+  // Tibetan bowl-like tone with harmonics
+  const freqs = [136.1, 272.2, 408.3]; // OM frequencies
+  freqs.forEach((freq, i) => {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'sine';
+    osc.frequency.value = freq;
+    gain.gain.value = 0;
+    gain.gain.linearRampToValueAtTime(0.06 / (i + 1), audioCtx.currentTime + 4);
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    osc.start();
+    audioNodes.push(osc, gain);
+  });
+  // Soft pulse
+  const lfo = audioCtx.createOscillator();
+  const lfoGain = audioCtx.createGain();
+  lfo.frequency.value = 0.05; lfoGain.gain.value = 0.02;
+  lfo.connect(lfoGain); lfoGain.connect(audioCtx.destination);
+  lfo.start(); audioNodes.push(lfo);
+}
+
+function createForestSound() {
+  // Layered: brown noise base + higher freq shimmer
+  const bufferSize = audioCtx.sampleRate * 4;
+  const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+  const data = buffer.getChannelData(0);
+  let lastOut = 0;
+  for (let i = 0; i < bufferSize; i++) {
+    const white = Math.random() * 2 - 1;
+    data[i] = (lastOut + 0.02 * white) / 1.02;
+    lastOut = data[i];
+    data[i] *= 3.5;
+  }
+  const source = audioCtx.createBufferSource();
+  source.buffer = buffer; source.loop = true;
+
+  const filter = audioCtx.createBiquadFilter();
+  filter.type = 'bandpass'; filter.frequency.value = 400; filter.Q.value = 0.5;
+
+  const masterGain = audioCtx.createGain();
+  masterGain.gain.value = 0;
+  masterGain.gain.linearRampToValueAtTime(0.25, audioCtx.currentTime + 4);
+
+  source.connect(filter); filter.connect(masterGain); masterGain.connect(audioCtx.destination);
+  source.start();
+  audioNodes = [source, masterGain];
+
+  // Add soft tone layer
+  const osc = audioCtx.createOscillator();
+  const oscGain = audioCtx.createGain();
+  osc.type = 'sine'; osc.frequency.value = 174;
+  oscGain.gain.value = 0;
+  oscGain.gain.linearRampToValueAtTime(0.03, audioCtx.currentTime + 5);
+  osc.connect(oscGain); oscGain.connect(audioCtx.destination);
+  osc.start(); audioNodes.push(osc, oscGain);
+}
+
+function pauseAudio() {
+  if (audioCtx) audioCtx.suspend().catch(()=>{});
+}
+
+function stopAudio() {
+  if (audioCtx) {
+    audioNodes.forEach(n => { try { n.stop?.(); } catch(e){} });
+    audioCtx.close().catch(()=>{});
+    audioCtx = null; audioNodes = [];
+  }
+}
+
+// ── CANVAS VISUALIZATIONS ──
+function startCanvas(style, baseColor) {
+  const canvas = document.getElementById('meditationCanvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  window.onresize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+
+  cancelAnimationFrame(canvasAnim);
+  if (style === 'waves') animateWaves(ctx, canvas, baseColor);
+  else if (style === 'pulse') animatePulse(ctx, canvas, baseColor);
+  else if (style === 'forest') animateForest(ctx, canvas, baseColor);
+}
+
+function animateWaves(ctx, canvas, color) {
+  let t = 0;
+  function draw() {
+    canvasAnim = requestAnimationFrame(draw);
+    ctx.fillStyle = 'rgba(42,53,40,0.15)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    const [r,g,b] = color;
+    for (let w = 0; w < 5; w++) {
+      ctx.beginPath();
+      const amp = 30 + w * 15;
+      const speed = 0.003 + w * 0.001;
+      const yBase = canvas.height * (0.4 + w * 0.06);
+      ctx.moveTo(0, yBase);
+      for (let x = 0; x <= canvas.width; x += 4) {
+        const y = yBase + Math.sin(x * 0.008 + t * speed * 10 + w) * amp
+                        + Math.sin(x * 0.005 + t * speed * 7 + w * 2) * (amp * 0.5);
+        ctx.lineTo(x, y);
+      }
+      ctx.lineTo(canvas.width, canvas.height);
+      ctx.lineTo(0, canvas.height);
+      ctx.closePath();
+      ctx.fillStyle = `rgba(${r},${g},${b},${0.04 - w * 0.005})`;
+      ctx.fill();
+    }
+    t++;
+  }
+  draw();
+}
+
+function animatePulse(ctx, canvas, color) {
+  let t = 0;
+  const cx = canvas.width / 2, cy = canvas.height / 2;
+  function draw() {
+    canvasAnim = requestAnimationFrame(draw);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const [r,g,b] = color;
+    for (let i = 6; i >= 0; i--) {
+      const pulse = Math.sin(t * 0.018 - i * 0.4) * 0.5 + 0.5;
+      const radius = 80 + i * 60 + pulse * 30;
+      const alpha = (0.06 - i * 0.007) * (0.5 + pulse * 0.5);
+      ctx.beginPath();
+      ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${r},${g},${b},${alpha})`;
+      ctx.fill();
+    }
+    t++;
+  }
+  draw();
+}
+
+function animateForest(ctx, canvas, color) {
+  let t = 0;
+  const particles = Array.from({length: 60}, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    size: Math.random() * 2 + 0.5,
+    speed: Math.random() * 0.3 + 0.1,
+    opacity: Math.random() * 0.4 + 0.1,
+    drift: (Math.random() - 0.5) * 0.3,
+  }));
+  const [r,g,b] = color;
+  function draw() {
+    canvasAnim = requestAnimationFrame(draw);
+    ctx.fillStyle = 'rgba(42,53,40,0.12)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // gradient fog layers
+    for (let layer = 0; layer < 3; layer++) {
+      const grad = ctx.createRadialGradient(
+        canvas.width * (0.3 + layer * 0.2), canvas.height * 0.6, 0,
+        canvas.width * (0.3 + layer * 0.2), canvas.height * 0.6, canvas.width * 0.4
+      );
+      grad.addColorStop(0, `rgba(${r},${g},${b},0.04)`);
+      grad.addColorStop(1, 'transparent');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
+    // floating particles
+    particles.forEach(p => {
+      p.y -= p.speed;
+      p.x += Math.sin(t * 0.01 + p.drift) * 0.3;
+      if (p.y < -10) { p.y = canvas.height + 10; p.x = Math.random() * canvas.width; }
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${r+40},${g+40},${b+30},${p.opacity * (0.5 + Math.sin(t * 0.02 + p.drift) * 0.5)})`;
+      ctx.fill();
+    });
+    t++;
+  }
+  draw();
+}
+
+// Legacy stubs (no longer used but kept for safety)
+function startMeditationLegacy() {}
+function toggleTimer() {}
+function stopTimer() {}
+function updateTimerDisplay() {}
 </script>
 </body>
 </html>
